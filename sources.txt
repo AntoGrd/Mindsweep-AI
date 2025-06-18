@@ -1,0 +1,15 @@
+https://towardsdatascience.com/tag/llm-applications/
+https://towardsdatascience.com/tag/llm/
+https://towardsdatascience.com/tag/ai-agent/
+https://generativeai.pub/
+https://mistral.ai/news
+https://mistral.ai/fr/news?category=research
+https://openai.com/news/
+https://gemini.google/latest-news/
+https://blog.langchain.com/
+https://venturebeat.com/tag/data-science/
+https://venturebeat.com/category/ai/
+https://www.cnbc.com/ai-artificial-intelligence/
+https://www.reddit.com/r/ArtificialInteligence/
+
+/robots.txt
