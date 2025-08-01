@@ -1,0 +1,7 @@
+# Fichiers et dossiers à ignorer pour les projets Python
+.venv/
+__pycache__/
+*.pyc
+
+# Fichiers de configuration sensibles
+.env
