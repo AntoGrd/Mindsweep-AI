@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Meet your new AI coding teammate: Gemini CLI GitHub Actions",
+        "link": "https://blog.google/technology/developers/introducing-gemini-cli-github-actions/",
+        "date": "2025-08-06T01:00:00+00:00",
+        "content": "In June, we launchedGemini CLI, an open-source AI agent that brings the power of Gemini to your terminal. The enthusiastic adoption from developers has been incredible. To keep up with the flood of feature requests and contributions, we put our own tool to the test — using Gemini CLI to automate issue triage and pull request reviews. When community members noticed our new workflows, they asked us to share what we’ve built.\n\nToday, we’re introducingGemini CLI GitHub Actions. It’s a no-cost, powerful AI coding teammate for your repository. It acts both as an autonomous agent for critical routine coding tasks, and an on-demand collaborator you can quickly delegate work to.\n\nIt’s now in beta, available to everyone worldwide, and you can find it on GitHub atgoogle-github-actions/run-gemini-cli.\n\nAn AI teammate in your repository\n\nWhile Gemini CLI is a tool built for individual use in your own terminal, Gemini CLI GitHub Actions was created for team collaboration on the platform where developers work with each other.\n\nTriggered by events like new issues or pull requests, it works asynchronously in the background, using the full context of your project to automatically handle tasks. It knows your code, understands what you want to do, and gets it done.\n\nWe’re launching with three powerful, open-source workflows that can help you code better, faster:"
+    },
+    {
+        "title": "Create personal illustrated storybooks in the Gemini app.",
+        "link": "https://blog.google/products/gemini/storybooks/",
+        "date": "2025-08-05T15:35:00+00:00",
+        "content": "Today we’re announcing a new way to bring your ideas to life in the Gemini app: personalized, illustrated storybooks complete with read-aloud narration.\n\nSimply describe any story you can imagine, and Gemini generates a unique 10-page book with custom art and audio. For a truly personal touch, you can ask Gemini to draw inspiration from your own photos and files. Bring your vision to life in any style imaginable: from pixel art and comics to claymation, crochet, and even coloring books, in more than 45 languages.\n\nTry it today in the Gemini app. Available globally on desktop and mobile, in all languages Gemini is available."
+    },
+    {
+        "title": "Try Deep Think in the Gemini app",
+        "link": "https://blog.google/products/gemini/gemini-2-5-deep-think/",
+        "date": "2025-08-01T11:00:00+00:00",
+        "content": "Today, we’re making Deep Think available in theGemini apptoGoogle AI Ultra subscribers— the latest in a lineup of extremely capable AI tools and features made exclusively available to them.\n\nThis new release incorporates feedback from early trusted testers and research breakthroughs. It’s a significant improvement over what was firstannounced at I/O, as measured in terms of key benchmark improvements and trusted tester feedback. It is a variation of the model thatrecently achievedthe gold-medal standard at this year’s International Mathematical Olympiad (IMO). While that model takes hours to reason about complex math problems, today’s release is faster and more usable day-to-day, while still reaching Bronze-level performance on the 2025 IMO benchmark, based on internal evaluations.\n\nDeep Think could be a powerful tool in creative problem solving:"
+    }
+]
