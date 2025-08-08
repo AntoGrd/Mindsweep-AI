@@ -20,7 +20,7 @@ class TowardsDataScienceScraper(BaseScraper):
         print(f"  > Récupération du contenu de: {article_url}")
         # Pause de 2 secondes pour être poli
         time.sleep(2) 
-        html_content = self._make_request(url=article_url)
+        html_content = self._make_request(url=article_url, use_selenium=True)
         soup = self._parse_html(html_content)
         if soup:
             # Inspection d'une page d'article sur TDS révèle le sélecteur suivant :
@@ -31,7 +31,7 @@ class TowardsDataScienceScraper(BaseScraper):
         return "Contenu non trouvé."
 
     def scrape(self):
-        html_content = self._make_request()
+        html_content = self._make_request(use_selenium=True)
         soup = self._parse_html(html_content)
         if not soup:
             print("Erreur: Impossible de récupérer ou de parser le contenu HTML.")
@@ -45,7 +45,7 @@ class TowardsDataScienceScraper(BaseScraper):
             print(f"Sélecteur utilisé : {self.article_selector}")
             return []
             
-        date_limite = datetime.now(timezone.utc) - timedelta(days=14)
+        date_limite = datetime.now(timezone.utc) - timedelta(days=7)
 
         for article_elem in article_elements:
             title_link_elem = article_elem.select_one(self.title_link_selector)
@@ -74,5 +74,7 @@ class TowardsDataScienceScraper(BaseScraper):
                         'date': date_elem['datetime'],
                         'content': article_content
                     })
-        
+                else:
+                    print(f"Article '{title}' a plus de 7 jours. Fin du scraping de TDS.")
+                    break
         return articles

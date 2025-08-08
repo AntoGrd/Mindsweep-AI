@@ -5,6 +5,7 @@ https://mistral.ai/news
 https://openai.com/news/
 https://gemini.google/latest-news/
 https://blog.langchain.com/
+https://ollama.com/blog
 https://generativeai.pub/
 https://venturebeat.com/tag/data-science/
 https://venturebeat.com/category/ai/

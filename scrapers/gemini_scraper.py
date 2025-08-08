@@ -14,8 +14,14 @@ class GeminiScraper(BaseScraper):
         self.article_card_selector = 'div._layout_6eojv_84 > a._card_6eojv_111'
         self.title_selector = 'div._cardTitle_6eojv_143'
         
-        # Sélecteurs pour la page d'article sur blog.google
-        self.article_content_selectors = ['div.article-body', 'div.rich-text', 'main']
+        # Liste de sélecteurs pour le contenu de l'article, du plus spécifique au plus général
+        self.article_content_selectors = [
+            'div.article-body',  # Pour les articles comme "Guided Learning" et "College Students"
+            'div.article-content', # Pour les articles comme "Student Tools"
+            'main'
+        ]
+        
+        # Sélecteur pour la balise JSON-LD qui contient les métadonnées de l'article
         self.json_ld_selector = 'script[type="application/ld+json"]'
 
     def _extract_article_content_from_page(self, article_url):
@@ -100,5 +106,7 @@ class GeminiScraper(BaseScraper):
                     'date': post_date_str,
                     'content': article_content
                 })
-        
+            else:
+                print(f"Article '{title}' a plus de 7 jours. Fin du scraping de Gemini.")
+                break
         return articles

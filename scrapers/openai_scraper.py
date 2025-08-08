@@ -32,6 +32,24 @@ class OpenAIScraper(BaseScraper):
             return content, date_str
         return "Contenu non trouvé.", None
 
+    def _extract_article_title_content_date_from_page(self, article_url):
+        print(f"  > Récupération du contenu de: {article_url}")
+        time.sleep(2)
+        html_content = self._make_request(url=article_url, use_selenium=True)
+        soup = self._parse_html(html_content)
+        if soup:
+            # Titre
+            title_elem = soup.find(['h1', 'h2'])
+            title = title_elem.get_text(strip=True) if title_elem else "Titre non trouvé."
+            # Date
+            date_elem = soup.select_one(self.article_date_selector)
+            date_str = date_elem['datetime'] if date_elem and 'datetime' in date_elem.attrs else None
+            # Contenu
+            content_elem = soup.select_one(self.article_content_selector)
+            content = content_elem.get_text(separator='\n', strip=True) if content_elem else "Contenu non trouvé."
+            return title, content, date_str
+        return "Titre non trouvé.", "Contenu non trouvé.", None
+
     def scrape(self):
         html_content = self._make_request(url=self.url, use_selenium=True)
         soup = self._parse_html(html_content)
@@ -50,20 +68,18 @@ class OpenAIScraper(BaseScraper):
             print(f"Sélecteur utilisé : {self.article_card_selector}")
             return []
 
+        seen_links = set()
+        
         for card in article_cards:
             link = f"https://openai.com{card['href']}" if card.has_attr('href') else None
-            if not link:
+            if not link or link in seen_links:
                 continue
+            seen_links.add(link)
 
-            # CORRECTION : Utiliser le nouveau sélecteur pour le titre
-            title_elem = card.select_one(self.title_selector)
-            title = title_elem.get_text(strip=True) if title_elem else "Titre non trouvé."
+            title, content, post_date_str = self._extract_article_title_content_date_from_page(link)
             
-            date_elem = card.select_one(self.date_selector)
-            post_date_str = date_elem['datetime'] if date_elem and 'datetime' in date_elem.attrs else None
-            
-            if not post_date_str:
-                print(f"Avertissement: Date non trouvée pour l'article '{title}'. Article ignoré.")
+            if not post_date_str or title == "Titre non trouvé." or content == "Contenu non trouvé.":
+                print(f"Avertissement: Titre, contenu ou date non trouvés pour l'article {link}. Article ignoré.")
                 continue
 
             try:
@@ -75,13 +91,13 @@ class OpenAIScraper(BaseScraper):
                 continue
 
             if article_date >= date_limite:
-                article_content, _ = self._extract_article_content_from_page(link)
-                
                 articles.append({
                     'title': title,
                     'link': link,
                     'date': post_date_str,
-                    'content': article_content
+                    'content': content
                 })
-        
+            else:
+                print(f"Article '{title}' a plus de 7 jours. Fin du scraping d'OpenAI.")
+                break
         return articles

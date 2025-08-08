@@ -97,14 +97,14 @@ class MistralAIScraper(BaseScraper):
                 if not slug:
                     continue
                 link = f"https://mistral.ai/news/{slug}"
-                
                 article_content = self._extract_article_content_from_page(link)
-
                 articles.append({
                     'title': title,
                     'link': link,
                     'date': post_date_str,
                     'content': article_content
                 })
-        
+            else:
+                print(f"Article '{post.get('title', 'Titre non trouvé')}' a plus de 7 jours. Fin du scraping de Mistral.")
+                break
         return articles
