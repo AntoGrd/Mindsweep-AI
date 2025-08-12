@@ -8,6 +8,8 @@ from scrapers.openai_scraper import OpenAIScraper
 from scrapers.gemini_scraper import GeminiScraper
 from scrapers.langchain_scraper import LangChainScraper 
 from scrapers.ollama_scraper import OllamaScraper
+from scrapers.kdnuggets_scraper import KDNuggetsScraper
+from scrapers.datascientest_scraper import DatascientestScraper
 
 def save_articles_to_file(articles, filename='veille_ai.json'):
     with open(filename, 'w', encoding='utf-8') as f:
@@ -35,7 +37,17 @@ def main():
         ],
         "ollama": [
             "https://ollama.com/blog"
-        ]
+        ],
+        "kdnuggets": [
+            "https://www.kdnuggets.com/news/index.html"
+        ],
+        "datascientest": [
+            "https://datascientest.com/en/category/artificial-intelligence",
+            "https://datascientest.com/en/category/cloud",
+            "https://datascientest.com/en/category/data-science",
+            "https://datascientest.com/en/category/dev",
+            "https://datascientest.com/en/category/network"
+        ],
     }
 
     scrapers = {
@@ -44,10 +56,13 @@ def main():
         "openai": OpenAIScraper,
         "gemini": GeminiScraper,
         "langchain": LangChainScraper,
-        "ollama": OllamaScraper
+        "ollama": OllamaScraper,
+        "kdnuggets": KDNuggetsScraper,
+        "datascientest": DatascientestScraper,
     }
 
     all_articles = []
+    seen_links = set()
 
     for source, urls in urls_to_scrape.items():
         ScraperClass = scrapers[source]
@@ -55,7 +70,11 @@ def main():
             print(f"\nDébut du scraping de {source.capitalize()} : {url}...")
             scraper = ScraperClass(url)
             articles_from_site = scraper.scrape()
-            all_articles.extend(articles_from_site)
+            # Déduplication par lien (URL)
+            for article in articles_from_site:
+                if article['link'] not in seen_links:
+                    all_articles.append(article)
+                    seen_links.add(article['link'])
             time.sleep(5)
 
     if all_articles:

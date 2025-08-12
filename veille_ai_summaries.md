@@ -1,0 +1,30 @@
+Objet — Veille Data & AI (hebdo) : Raisonnement latent, GPT‑5, agents et outils pratiques
+
+À la Une : Modèles et améliorations majeures
+- Coconut — raisonnement latent dans l’espace caché (paper) : présentation d’un paradigme « Chain of Continuous Thought » qui remplace des étapes linguistiques par des pensées latentes entraînables et montre des gains notables sur tâches de raisonnement. Lecture technique (arXiv) → https://arxiv.org/abs/2412.06769
+- Introducing GPT‑5 (OpenAI) : sortie majeure — système unifié, « thinking » model pour raisonnement étendu, GPT‑5 Pro, progrès mesurables en code / santé / multimodal, et nouveaux paramètres API (verbosity, reasoning_effort). Panneau produit + fiches techniques → https://openai.com/index/introducing-gpt-5/ and https://openai.com/index/introducing-gpt-5-for-developers/ ; system card & safety → https://openai.com/index/gpt-5-system-card/ et safe‑completions → https://openai.com/index/gpt-5-safe-completions/
+
+Innovations et applications pratiques
+- Gemini & Google (juillet) — nouvelles fonctions pour étudiants, NotebookLM (video overviews, Studio), Veo 3 (photo→vidéo), AlphaEarth pour cartographie planétaire et outils shopping visuels : prioriser pour POC education / multimodal / mapping → https://blog.google/technology/ai/google-ai-updates-july-2025/ ; Gemini student tools → https://blog.google/products/gemini/new-gemini-tools-students-august-2025/ et Guided Learning → https://blog.google/outreach-initiatives/education/guided-learning/
+- Agentic AI — repère & mise en pratique : synthèse des concepts clés (agents, tools, context engineering, MCP, LangChain/AgentFlow) + atelier vidéo hands‑on (Jon Krohn / Nebula) pour construire agents multi‑outils et multi‑étapes → 10 concepts : https://www.kdnuggets.com/10-agentic-ai-key-concepts-explained et tutoriel vidéo pratique → https://www.kdnuggets.com/agentic-ai-hands-on-in-python-a-video-tutorial
+- Open SWE — agent open‑source asynchrone pour engineering logiciel : exécution en sandbox, planification, revue automatisée et PRs GitHub — intéressant pour prototyper équipes dev‑agents → https://blog.langchain.com/introducing-open-swe-an-open-source-asynchronous-coding-agent/
+
+Collaborations et partenariats stratégiques
+- Microsoft Graph : point d’entrée unifié vers Microsoft 365 (Outlook, Teams, SharePoint…) — utile pour cas d’intégration interne, Copilot/PowerPlatform & automatisations → guide d’ensemble → https://datascientest.com/en/all-about-microsoft-graph
+- Google / investissements & infra : annonces Cloud, data centers, initiatives formation et sécurité (contexte pour projets IA à grande échelle) — résumé des actions récentes dans la revue Google AI (juillet) → https://blog.google/technology/ai/google-ai-updates-july-2025/
+
+Outils et concepts pour développeurs & data scientists
+- Structurer les sorties LLM : 3 approches (provider‑schema, prompting+reprompting, constrained decoding). Outils pratiques : Instructor (prompt → Pydantic), Outlines (constrained decoding) — lire pour fiabiliser intégrations API/produit → https://towardsdatascience.com/generating-structured-outputs-from-llms/ (et Outlines/Instructor mentionnés dans l’article)
+- Topic modeling opérationnel — BERTopic : pipeline pratique, tuning UMAP/HDBSCAN, enrichir labels (n‑grams, custom tokenizer, LLM summaries) — utile pour extraction de thèmes et dashboards → https://towardsdatascience.com/finetune-your-topic-modeling-workflow-with-bertopic/
+- Text → SQL avec LLMs : bonnes pratiques (schema exposure vs live connections), exemples de prompt et pièges — à intégrer dans solutions BI conversationnelles → https://www.kdnuggets.com/how-to-go-from-text-to-sql-with-llms
+- n8n et automatisation : roadmap self‑study + exemples d’industrialisation (workflows, intégration LLMs, feature engineering automatisé) — à tester pour scaling de pipelines ETL & feature stores → https://www.kdnuggets.com/automations-with-n8n-a-self-study-roadmap et https://www.kdnuggets.com/ai-powered-feature-engineering-with-n8n-scaling-data-science-intelligence
+- Neo4j — guide d’installation & premiers pas (graph DB) : utile pour recommender systems, investigations relationnelles → https://www.kdnuggets.com/getting-started-with-neo4j-installation-and-setup-guide
+- Context engineering & RAG : tutos / framework (DSPy, bonnes pratiques, query rewriting, HYDE, multi‑hop, citations, mémoire) — fondamental pour fiabiliser agents et assistants métiers → intro & hands‑on DSPy → https://www.kdnuggets.com/a-gentle-introduction-to-context-engineering-in-llms et tutoriel pratique → https://towardsdatascience.com/context-engineering-a-comprehensive-hands-on-tutorial-with-dspy/
+- Recherche d’exemples « golden » pour In‑Context Learning (AuPair) : méthode systématique pour sélectionner jeux d’exemples efficaces — améliore coût/performances ICL → https://towardsdatascience.com/finding-golden-examples-a-smarter-approach-to-in-context-learning/
+- Boîte à outils productivité : scripts Python & bonnes pratiques (data quality, versioning, export multi‑format) — kit pour équipes data ops → https://www.kdnuggets.com/5-useful-python-scripts-for-busy-data-scientists
+- Concepts à revoir rapidement : cosine similarity (explication mathématique) pour embeddings et choix de métrique → https://towardsdatascience.com/demystifying-cosine-similarity/
+
+Pour aller plus loin
+Consultez directement les sources listées ci‑dessus (liens fournis) et priorisez selon vos besoins : MLOps/agents (Open SWE, LangChain, MCP), sécurité & conformité (GPT‑5 safe‑completions, Google infra), et fiabilité produit (structured outputs, context engineering, RAG). Si vous souhaitez, je peux préparer la semaine prochaine une note technique (1 page) focalisée sur : « intégrer GPT‑5 et agents dans nos offres de conseil — risques, coûts, roadmap POC ».
+
+Bonne lecture — et dites-moi si vous voulez une version condensée pour un atelier client.

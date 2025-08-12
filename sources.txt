@@ -6,10 +6,10 @@ https://openai.com/news/
 https://gemini.google/latest-news/
 https://blog.langchain.com/
 https://ollama.com/blog
+https://www.kdnuggets.com/
+https://datascientest.com/en/blog-en
 https://generativeai.pub/
 https://venturebeat.com/tag/data-science/
 https://venturebeat.com/category/ai/
 https://www.cnbc.com/ai-artificial-intelligence/
 https://www.reddit.com/r/ArtificialInteligence/
-
-/robots.txt
