@@ -1,0 +1,89 @@
+import json
+import time
+from scrapers.towards_data_science_scraper import TowardsDataScienceScraper
+from scrapers.mistral_ai_scraper import MistralAIScraper
+from scrapers.openai_scraper import OpenAIScraper
+from scrapers.gemini_scraper import GeminiScraper
+from scrapers.langchain_scraper import LangChainScraper
+from scrapers.ollama_scraper import OllamaScraper
+from scrapers.kdnuggets_scraper import KDNuggetsScraper
+from scrapers.datascientest_scraper import DatascientestScraper
+from llm_summarizer.summarize_articles import summarize_all_articles
+
+def save_articles_to_file(articles, filename='veille_ai.json'):
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(articles, f, ensure_ascii=False, indent=4)
+    print(f"\nLes articles ont été sauvegardés dans le fichier '{filename}'.")
+
+def main():
+    urls_to_scrape = {
+        "tds": [
+            "https://towardsdatascience.com/tag/llm-applications/",
+            "https://towardsdatascience.com/tag/llm/",
+            "https://towardsdatascience.com/tag/ai-agent/",
+        ],
+        "mistral": [
+            "https://mistral.ai/news"
+        ],
+        "openai": [
+            "https://openai.com/news/"
+        ],
+        "gemini": [
+            "https://gemini.google/latest-news/"
+        ],
+        "langchain": [
+            "https://blog.langchain.com/"
+        ],
+        "ollama": [
+            "https://ollama.com/blog"
+        ],
+        "kdnuggets": [
+            "https://www.kdnuggets.com/news/index.html"
+        ],
+        "datascientest": [
+            "https://datascientest.com/en/category/artificial-intelligence",
+            "https://datascientest.com/en/category/cloud",
+            "https://datascientest.com/en/category/data-science",
+            "https://datascientest.com/en/category/dev",
+            "https://datascientest.com/en/category/network"
+        ],
+    }
+
+    scrapers = {
+        "tds": TowardsDataScienceScraper,
+        "mistral": MistralAIScraper,
+        "openai": OpenAIScraper,
+        "gemini": GeminiScraper,
+        "langchain": LangChainScraper,
+        "ollama": OllamaScraper,
+        "kdnuggets": KDNuggetsScraper,
+        "datascientest": DatascientestScraper,
+    }
+
+    all_articles = []
+    seen_links = set()
+
+    for source, urls in urls_to_scrape.items():
+        ScraperClass = scrapers[source]
+        for url in urls:
+            print(f"\nDébut du scraping de {source.capitalize()} : {url}...")
+            scraper = ScraperClass(url)
+            articles_from_site = scraper.scrape()
+            for article in articles_from_site:
+                if article['link'] not in seen_links:
+                    all_articles.append(article)
+                    seen_links.add(article['link'])
+            time.sleep(5)
+
+    if all_articles:
+        all_articles.sort(key=lambda x: x.get('date', '0'), reverse=True)
+        save_articles_to_file(all_articles)
+        try:
+            summary = summarize_all_articles(all_articles)
+            with open('veille_ai_summaries.md', 'w', encoding='utf-8') as f:
+                f.write(summary)
+            print("Résumé global sauvegardé dans veille_ai_summaries.md")
+        except Exception as e:
+            print(f"Erreur lors du résumé global : {e}")
+    else:
+        print("Aucun article récent trouvé sur toutes les pages. Le fichier n'a pas été créé.")
