@@ -80,9 +80,9 @@ def main():
         save_articles_to_file(all_articles)
         try:
             summary = summarize_all_articles(all_articles)
-            with open('veille_ai_summaries.md', 'w', encoding='utf-8') as f:
+            with open('veille_ai_summaries.html', 'w', encoding='utf-8') as f:
                 f.write(summary)
-            print("Résumé global sauvegardé dans veille_ai_summaries.md")
+            print("Résumé global sauvegardé dans veille_ai_summaries.html")
         except Exception as e:
             print(f"Erreur lors du résumé global : {e}")
     else:

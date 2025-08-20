@@ -26,37 +26,40 @@ class BaseScraper(ABC):
     def _make_request(self, url=None, use_selenium=False):
         if url is None:
             url = self.url
-        
+        import os
         if use_selenium:
             print("Utilisation de Selenium...")
             options = webdriver.ChromeOptions()
-            
             # Options recommandées pour éviter les erreurs
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
             options.add_argument('--disable-gpu')
-
-            # Active le mode headless
-            options.add_argument('--headless=new')
-            
+            # Permet de désactiver le mode headless pour debug via une variable d'env
+            if os.getenv('SELENIUM_HEADLESS', '1') == '1':
+                options.add_argument('--headless=new')
+            # Utilise un User-Agent pour paraître plus crédible
+            options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36')
             try:
-                # Utilise un User-Agent pour paraître plus crédible
-                options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36')
-                
                 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-                
+                driver.set_page_load_timeout(180)
                 driver.get(url)
-                WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, "main"))
+                import time
+                time.sleep(8)  # Laisse le JS charger sur tous les sites
+                WebDriverWait(driver, 60).until(
+                    EC.presence_of_element_located((By.CSS_SELECTOR, "body"))
                 )
-                return driver.page_source
+                page_source = driver.page_source
             except Exception as e:
                 print(f"Erreur Selenium lors de la requête sur {url}: {e}")
                 print("Le problème pourrait être lié à la version de Chrome/ChromeDriver ou aux options du navigateur.")
-                print("Assurez-vous que Chrome est à jour ou essayez de désactiver le mode headless pour le débogage.")
+                print("Assurez-vous que Chrome est à jour ou essayez de désactiver le mode headless pour le débogage (export SELENIUM_HEADLESS=0).")
                 return None
             finally:
-                driver.quit()
+                try:
+                    driver.quit()
+                except Exception:
+                    pass
+            return page_source
         else:
             # ... (le code pour requests reste inchangé) ...
             try:
